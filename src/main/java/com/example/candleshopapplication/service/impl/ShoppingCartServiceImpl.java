@@ -29,8 +29,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public List<Candle> getShoppingCart(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
-        if(shoppingCartRepository.getShoppingCartByUser(user).isEmpty())
+        if(shoppingCartRepository.getShoppingCartByUser(user).isEmpty()) {
+            ShoppingCart shoppingCart = new ShoppingCart(new ArrayList<>(), user);
+            shoppingCartRepository.save(shoppingCart);
             return new ArrayList<>();
+        }
         else {
             return shoppingCartRepository.getShoppingCartByUser(user).get().getCandles();
         }

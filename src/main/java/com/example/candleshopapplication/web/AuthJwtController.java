@@ -10,24 +10,16 @@ import com.example.candleshopapplication.security.services.UserDetailsImpl;
 import com.example.candleshopapplication.security.services.UserDetailsServiceImpl;
 import com.example.candleshopapplication.service.ShoppingCartService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
@@ -65,7 +57,6 @@ public class AuthJwtController {
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
-        shoppingCartService.create(signUpRequest.getUsername());
         userDetailsService.register(signUpRequest);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
