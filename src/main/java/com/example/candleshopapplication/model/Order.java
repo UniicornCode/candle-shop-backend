@@ -15,34 +15,13 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    private User user;
-
+    private String username;
     @ManyToMany
     private List<Candle> candles;
 
-    public Order(User user, List<Candle> candles) {
-        this.user = user;
+    public Order(String username, List<Candle> candles) {
+        this.username = username;
         this.candles = candles;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<Candle> getCandles() {
-        return candles;
-    }
-
-    public void setCandles(List<Candle> candles) {
-        this.candles = candles;
-    }
 }

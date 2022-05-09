@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
             List<Order> list = orderRepository.findAll();
             List<Order> orders = new ArrayList<>();
             for (Order o: list) {
-                if (o.getUser().getUsername().equals(userDetails.getUsername()))
+                if (o.getUsername().equals(userDetails.getUsername()))
                     orders.add(o);
             }
             return orders;
@@ -55,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
         List<Candle> candleList = shoppingCart.getCandles();
         shoppingCart.setCandles(new ArrayList<>());
         shoppingCartRepository.save(shoppingCart);
-        Order order = new Order(user, candleList);
+        Order order = new Order(username, candleList);
         Order createdOrder = orderRepository.save(order);
         return Optional.of(createdOrder);
     }

@@ -1,6 +1,7 @@
 package com.example.candleshopapplication.web;
 
 import com.example.candleshopapplication.model.Suggestion;
+import com.example.candleshopapplication.model.dto.SuggestionDto;
 import com.example.candleshopapplication.service.SuggestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,10 @@ public class SuggestionController {
     }
 
     @PostMapping
-    public ResponseEntity<Suggestion> create (@RequestParam String text) {
+    public ResponseEntity<Suggestion> create (@RequestBody SuggestionDto text) {
         UserDetails userDetails =
                 (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return suggestionService.create(userDetails.getUsername(), text)
+        return suggestionService.create(userDetails.getUsername(), text.getText())
                 .map(suggestion -> ResponseEntity.ok().body(suggestion))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
