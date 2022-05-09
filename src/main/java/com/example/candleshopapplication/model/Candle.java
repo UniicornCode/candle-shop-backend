@@ -19,7 +19,7 @@ public class Candle {
 
     private String imgUrl;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Material> materials;
 
     public Candle(Integer price, String name, String imgUrl, List<Material> materials) {

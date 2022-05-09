@@ -16,7 +16,7 @@ public class Order {
     private Integer id;
 
     private String username;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Candle> candles;
 
     public Order(String username, List<Candle> candles) {
